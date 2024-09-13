@@ -18,19 +18,4 @@ public class TestSignUpRequestFactory {
         return request;
     }
 
-    public static SignUpRequest createSignUpWithPassword(String password) {
-        SignUpRequest request = new SignUpRequest(
-            "email",
-            password,
-            "memberName",
-            "majorName",
-            "minorName",
-            "enrollmentStatus",
-            "prLink"
-        );
-
-        return request;
-    }
-
-
 }
