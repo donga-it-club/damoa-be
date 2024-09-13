@@ -7,7 +7,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.donga.damoa.domain.member.application.SignUpService;
+import com.donga.damoa.domain.member.application.MemberSignUpService;
 import com.donga.damoa.domain.member.dao.MemberRepository;
 import com.donga.damoa.domain.member.domain.MemberCreator;
 import com.donga.damoa.domain.member.dto.SignUpRequest;
@@ -28,7 +28,7 @@ public class SignUpServiceMockTest {
     @Mock
     MemberCreator memberCreator;
     @InjectMocks
-    SignUpService signUpService;
+    MemberSignUpService signUpService;
 
     @Test
     @DisplayName("중복된 이메일로 회원가입 시에 예외가 발생한다.")

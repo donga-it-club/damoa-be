@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class SignUpService {
+public class MemberSignUpService {
 
     private final MemberRepository memberRepository;
     private final MemberCreator memberCreator;

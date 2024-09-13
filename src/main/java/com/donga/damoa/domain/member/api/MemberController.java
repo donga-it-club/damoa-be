@@ -1,6 +1,6 @@
 package com.donga.damoa.domain.member.api;
 
-import com.donga.damoa.domain.member.application.SignUpService;
+import com.donga.damoa.domain.member.application.MemberSignUpService;
 import com.donga.damoa.domain.member.dto.SignUpRequest;
 import com.donga.damoa.global.common.response.Response;
 import jakarta.validation.Valid;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final SignUpService signUpService;
+    private final MemberSignUpService signUpService;
 
     @PostMapping("/sign-up")
     public Response<Void> signUp(@Valid @RequestBody SignUpRequest request) {
