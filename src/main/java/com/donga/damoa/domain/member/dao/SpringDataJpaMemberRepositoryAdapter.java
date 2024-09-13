@@ -15,4 +15,8 @@ public class SpringDataJpaMemberRepositoryAdapter implements MemberRepository {
         repository.save(member);
     }
 
+    @Override
+    public boolean existsByEmail(String email) {
+        return repository.existsByEmail(email);
+    }
 }
