@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice(basePackageClasses = {MemberController.class })
+@RestControllerAdvice(basePackageClasses = {MemberController.class})
 public class MemberExceptionHandler {
 
     @ExceptionHandler(EmailDuplicateException.class)
