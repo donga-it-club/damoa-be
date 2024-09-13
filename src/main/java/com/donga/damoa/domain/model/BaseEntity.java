@@ -1,4 +1,4 @@
-package com.donga.damoa.common;
+package com.donga.damoa.domain.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-abstract class BaseEntity {
+public abstract class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
@@ -18,4 +18,5 @@ abstract class BaseEntity {
 
     @LastModifiedDate
     private LocalDateTime lastModifiedDate = LocalDateTime.now();
+
 }
