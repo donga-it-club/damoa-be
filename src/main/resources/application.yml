@@ -27,3 +27,8 @@ springdoc:
     path: /swagger-ui.html
     disable-swagger-default-url: true
     doc-expansion: none
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+  expiration-hours: ${JWT_EXPIRATION_TIME}
+  issuer: ${JWT_ISSUER}

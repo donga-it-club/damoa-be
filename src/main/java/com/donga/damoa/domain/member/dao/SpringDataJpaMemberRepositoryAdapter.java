@@ -1,6 +1,7 @@
 package com.donga.damoa.domain.member.dao;
 
 import com.donga.damoa.domain.member.domain.Member;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,4 +20,15 @@ public class SpringDataJpaMemberRepositoryAdapter implements MemberRepository {
     public boolean existsByEmail(String email) {
         return repository.existsByEmail(email);
     }
+
+    @Override
+    public Optional<Member> findMemberByEmail(String email) {
+        return repository.findMemberByEmail(email);
+    }
+
+    @Override
+    public Optional<Member> findByIdWithMajor(Long memberId) {
+        return repository.findMemberWithMajorsById(memberId);
+    }
+
 }
