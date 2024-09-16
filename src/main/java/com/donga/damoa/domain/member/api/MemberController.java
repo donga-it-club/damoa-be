@@ -52,6 +52,10 @@ public class MemberController {
         return Response.of(loginService.login(request));
     }
 
+    @Operation(summary = "내 정보 조회 API", description = "사용자는 자신의 정보를 조회할 수 있다.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "조회 성공")
+    })
     @GetMapping("/me")
     public Response<MyInfoResponse> me(@CurrentUser Member member) {
         return Response.of(memberQueryService.getMyInfo(member));
