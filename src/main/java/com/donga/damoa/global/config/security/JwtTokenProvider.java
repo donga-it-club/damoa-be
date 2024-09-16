@@ -46,4 +46,22 @@ public class JwtTokenProvider {
             .compact();
     }
 
+    public String getEmailFromJwtToken(String jwtToken) {
+        Claims claims = Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(jwtToken)
+            .getBody();
+        return claims.getSubject();
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }
