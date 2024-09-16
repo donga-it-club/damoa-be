@@ -30,5 +30,5 @@ springdoc:
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
-  expiration-hours: 1
+  expiration-hours: ${JWT_EXPIRATION_TIME}
   issuer: ${JWT_ISSUER}
