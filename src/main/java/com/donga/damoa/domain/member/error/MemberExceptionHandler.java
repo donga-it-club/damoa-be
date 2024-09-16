@@ -4,6 +4,7 @@ import com.donga.damoa.domain.member.api.MemberController;
 import com.donga.damoa.domain.member.error.exception.EmailDuplicateException;
 import com.donga.damoa.domain.member.error.exception.EmailNotFoundException;
 import com.donga.damoa.domain.member.error.exception.InvalidPasswordException;
+import com.donga.damoa.domain.member.error.exception.UserNotFoundException;
 import com.donga.damoa.global.error.ErrorCode;
 import com.donga.damoa.global.error.ErrorResponse;
 import org.springframework.http.ResponseEntity;
@@ -31,15 +32,18 @@ public class MemberExceptionHandler {
         return handleException(errorCode);
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException e) {
+        ErrorCode errorCode = e.getErrorCode();
+        return handleException(errorCode);
+    }
+
     private ResponseEntity<Object> handleException(ErrorCode errorCode) {
         return ResponseEntity.status(errorCode.getHttpStatus())
             .body(createErrorResponse(errorCode));
     }
 
     private ErrorResponse createErrorResponse(ErrorCode errorCode) {
-        return ErrorResponse.builder()
-            .code(errorCode.name())
-            .message(errorCode.getMessage())
-            .build();
+        return new ErrorResponse(errorCode);
     }
 }

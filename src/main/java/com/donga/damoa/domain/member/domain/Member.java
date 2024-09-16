@@ -54,15 +54,19 @@ public class Member extends BaseEntity {
     private Role role;
 
     @Builder
-    public Member(String email, String password, String name, List<Major> majors,
+    public Member(String email, String password, String name,
         EnrollmentStatus enrollmentStatus, String prLink) {
         this.email = email;
         this.password = password;
         this.name = name;
-        this.majors = majors;
         this.enrollmentStatus = enrollmentStatus;
         this.prLink = prLink;
         this.role = Role.USER; // 기본적으로 USER 권한을 부여한다.
+    }
+
+    public void addMajor(Major major) {
+        this.majors.add(major);
+        major.assignMember(this);
     }
 
 }

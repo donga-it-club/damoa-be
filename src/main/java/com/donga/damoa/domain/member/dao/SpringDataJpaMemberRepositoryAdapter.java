@@ -25,4 +25,10 @@ public class SpringDataJpaMemberRepositoryAdapter implements MemberRepository {
     public Optional<Member> findMemberByEmail(String email) {
         return repository.findMemberByEmail(email);
     }
+
+    @Override
+    public Optional<Member> findByIdWithMajor(Long memberId) {
+        return repository.findMemberWithMajorsById(memberId);
+    }
+
 }

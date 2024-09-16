@@ -13,11 +13,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "majors")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Major {
 
     @Id
@@ -40,6 +42,10 @@ public class Major {
         this.member = member;
         this.type = type;
         this.name = name;
+    }
+
+    public void assignMember(Member member) {
+        this.member = member;
     }
 
 }

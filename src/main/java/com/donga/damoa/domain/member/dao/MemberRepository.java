@@ -11,4 +11,6 @@ public interface MemberRepository {
 
     Optional<Member> findMemberByEmail(String email);
 
+    Optional<Member> findByIdWithMajor(Long memberId);
+
 }

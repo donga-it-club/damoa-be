@@ -20,10 +20,7 @@ public class GlobalExceptionHandler {
     }
 
     private ErrorResponse createErrorResponse(ErrorCode errorCode) {
-        return ErrorResponse.builder()
-            .code(errorCode.name())
-            .message(errorCode.getMessage())
-            .build();
+        return new ErrorResponse(errorCode);
     }
 
 }

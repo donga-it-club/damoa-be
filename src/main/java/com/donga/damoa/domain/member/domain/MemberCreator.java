@@ -17,14 +17,19 @@ public class MemberCreator {
     public Member createMember(SignUpRequest request) {
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         List<Major> majors = createMajors(request.getMajorName(), request.getMinorName());
-        return Member.builder()
-            .majors(majors)
+        Member member = Member.builder()
             .email(request.getEmail())
             .password(encodedPassword)
             .name(request.getMemberName())
             .prLink(request.getPrLink())
             .enrollmentStatus(EnrollmentStatus.valueOf(request.getEnrollmentStatus()))
             .build();
+
+        for(Major major : majors) {
+            member.addMajor(major);
+        }
+
+        return member;
     }
 
     public List<Major> createMajors(String majorName, String minorName) {
