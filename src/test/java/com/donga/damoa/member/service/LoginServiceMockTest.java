@@ -48,7 +48,7 @@ public class LoginServiceMockTest {
 
         // when
         LoginRequest request = new LoginRequest(email, rawPassword);
-        String jwtToken = loginService.login(request);
+        String jwtToken = loginService.login(request).getAccessToken();
 
         // then
         assertThat(jwtToken).isEqualTo("jwt-token");
