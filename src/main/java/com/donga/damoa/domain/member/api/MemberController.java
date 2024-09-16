@@ -37,7 +37,7 @@ public class MemberController {
         return Response.of(HttpStatus.CREATED);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/sign-in")
     public String login(@Valid @RequestBody LoginRequest request) {
         String loginMessage = loginService.login(request);
         return loginMessage;

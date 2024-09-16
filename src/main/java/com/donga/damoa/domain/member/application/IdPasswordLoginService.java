@@ -5,16 +5,18 @@ import com.donga.damoa.domain.member.domain.Member;
 import com.donga.damoa.domain.member.error.MemberErrorCode;
 import com.donga.damoa.domain.member.error.exception.EmailNotFoundException;
 import com.donga.damoa.domain.member.error.exception.InvalidPasswordException;
+import com.donga.damoa.global.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class IdPasswordLoginService extends AbstractLoginService {
+public class IdPasswordLoginService extends AuthLoginService {
 
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
+    private final JwtTokenProvider tokenProvider;
 
     @Override
     protected Member findMemberByEmail(String email) {
@@ -29,5 +31,10 @@ public class IdPasswordLoginService extends AbstractLoginService {
         if (!passwordEncoder.matches(password, member.getPassword())) {
             throw new InvalidPasswordException(MemberErrorCode.INVALID_PASSWORD);
         }
+    }
+
+    @Override
+    protected String generateToken(Member member) {
+        return tokenProvider.createJwtToken(member);
     }
 }

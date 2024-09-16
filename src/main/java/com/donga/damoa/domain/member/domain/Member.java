@@ -49,6 +49,10 @@ public class Member extends BaseEntity {
     @Column(nullable = true)
     private String prLink; // PR 링크
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     @Builder
     public Member(String email, String password, String name, List<Major> majors,
         EnrollmentStatus enrollmentStatus, String prLink) {
@@ -58,6 +62,7 @@ public class Member extends BaseEntity {
         this.majors = majors;
         this.enrollmentStatus = enrollmentStatus;
         this.prLink = prLink;
+        this.role = Role.USER; // 기본적으로 USER 권한을 부여한다.
     }
 
 }
