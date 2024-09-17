@@ -1,6 +1,7 @@
 package com.donga.damoa.domain.member.domain;
 
 import com.donga.damoa.domain.model.BaseEntity;
+import com.donga.damoa.domain.myPage.domain.AccountStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -53,15 +54,20 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private Role role;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    private AccountStatus accountStatus;
+
     @Builder
     public Member(String email, String password, String name,
-        EnrollmentStatus enrollmentStatus, String prLink) {
+        EnrollmentStatus enrollmentStatus, String prLink, AccountStatus accountStatus) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.enrollmentStatus = enrollmentStatus;
         this.prLink = prLink;
         this.role = Role.USER; // 기본적으로 USER 권한을 부여한다.
+        this.accountStatus = accountStatus;
     }
 
     public void addMajor(Major major) {
@@ -69,4 +75,15 @@ public class Member extends BaseEntity {
         major.assignMember(this);
     }
 
+    public void setEnrollmentStatus(EnrollmentStatus enrollmentStatus) {
+        this.enrollmentStatus = enrollmentStatus;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void deactivateAccount() {
+        this.accountStatus = AccountStatus.DEACTIVATED;
+    }
 }
