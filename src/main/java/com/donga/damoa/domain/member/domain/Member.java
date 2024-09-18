@@ -19,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @Entity
@@ -79,8 +80,11 @@ public class Member extends BaseEntity {
         this.enrollmentStatus = enrollmentStatus;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void changePassword(String newPassword, PasswordEncoder passwordEncoder) {
+        if (newPassword == null || newPassword.isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be empty.");
+        }
+        this.password = passwordEncoder.encode(newPassword);
     }
 
     public void deactivateAccount() {

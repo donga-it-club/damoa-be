@@ -9,8 +9,6 @@ public interface MemberRepository {
 
     boolean existsByEmail(String email);
 
-    boolean existsById(Long memberId);
-
     Optional<Member> findMemberByEmail(String email);
 
     Optional<Member> findByIdWithMajor(Long memberId);

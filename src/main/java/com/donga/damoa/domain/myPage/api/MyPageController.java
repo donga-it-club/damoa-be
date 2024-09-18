@@ -1,6 +1,8 @@
 package com.donga.damoa.domain.myPage.api;
 
 import com.donga.damoa.domain.member.domain.Member;
+import com.donga.damoa.domain.myPage.application.MyPageDeactivateService;
+import com.donga.damoa.domain.myPage.application.MyPageQueryService;
 import com.donga.damoa.domain.myPage.application.MyPageService;
 import com.donga.damoa.domain.myPage.dto.MyPageRequest;
 import com.donga.damoa.domain.myPage.dto.MyPageResponse;
@@ -27,16 +29,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class MyPageController {
 
     private final MyPageService myPageService;
+    private final MyPageQueryService myPageQueryService;
+    private final MyPageDeactivateService myPageDeactivateService;
 
+    //정보 조회
     @Operation(summary = "Retrieve MyPage information", description = "Members can retrieve their MyPage information.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved MyPage information")
     })
     @GetMapping
     public Response<MyPageResponse> getMyPage(@CurrentUser Member member) {
-        return Response.of(myPageService.getMyPage(member));
+        return Response.of(myPageQueryService.getMyPage(member));
     }
 
+    //정보 수정
     @Operation(summary = "Update MyPage information", description = "Members can update their MyPage information.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successfully updated MyPage information")
@@ -47,13 +53,14 @@ public class MyPageController {
         return Response.of(HttpStatus.OK);
     }
 
+    //계정 비활성화
     @Operation(summary = "Deactivate Account", description = "Members can deactivate (soft delete) their account.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Successfully deactivated account")
     })
     @DeleteMapping
     public Response<Void> deactivateAccount(@CurrentUser Member member) {
-        myPageService.deactivateAccount(member);
+        myPageDeactivateService.deactivateAccount(member);
         return Response.of(HttpStatus.OK);
     }
 }
