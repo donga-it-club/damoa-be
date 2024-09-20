@@ -11,7 +11,6 @@ import com.donga.damoa.domain.myPage.application.MyPageDeactivateService;
 import com.donga.damoa.domain.myPage.application.MyPageQueryService;
 import com.donga.damoa.domain.myPage.application.MyPageService;
 import com.donga.damoa.domain.myPage.dao.MyPageRepository;
-import com.donga.damoa.domain.myPage.domain.AccountStatus;
 import com.donga.damoa.domain.myPage.domain.MyPage;
 import com.donga.damoa.domain.myPage.dto.MyPageRequest;
 import com.donga.damoa.domain.myPage.dto.MyPageResponse;
@@ -159,17 +158,17 @@ public class MyPageServiceMockTest {
     @DisplayName("Successfully deactivates account (soft delete).")
     void deactivateAccount_success() {
         // given
-        Member member = TestCreateMemberFactory.createMember("test@example.com", "encoded password");
+        Member member = TestCreateMemberFactory.createMember("test@example.com", "encoded-password");
 
-        // Mock 설정 - memberRepository에서 Member가 반환되도록 설정
+        // Mock 설정 - MyPage가 존재하는 경우
         when(myPageRepository.findByMemberId(member.getId())).thenReturn(Optional.of(new MyPage(member, EnrollmentStatus.ENROLLED, List.of())));
 
         // when
         myPageDeactivateService.deactivateAccount(member);
 
         // then
-        verify(memberRepository).save(member);
-        assertThat(member.getAccountStatus()).isEqualTo(AccountStatus.DEACTIVATED);
+        assertThat(member.isDeleted()).isTrue();  // 삭제 상태 확인
+        verify(memberRepository).save(member);  // Member 저장이 호출되었는지 확인
     }
 
 }

@@ -1,7 +1,6 @@
 package com.donga.damoa.domain.member.domain;
 
 import com.donga.damoa.domain.model.BaseEntity;
-import com.donga.damoa.domain.myPage.domain.AccountStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,11 +18,15 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @Entity
 @Table(name = "members")
+@SQLDelete(sql = "UPDATE members SET deleted = true WHERE member_id = ?")
+@Where(clause = "deleted = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
 
@@ -55,20 +58,19 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private Role role;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false)
-    private AccountStatus accountStatus;
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted = false;  // Soft Delete를 위한 필드
 
     @Builder
     public Member(String email, String password, String name,
-        EnrollmentStatus enrollmentStatus, String prLink, AccountStatus accountStatus) {
+        EnrollmentStatus enrollmentStatus, String prLink) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.enrollmentStatus = enrollmentStatus;
         this.prLink = prLink;
         this.role = Role.USER; // 기본적으로 USER 권한을 부여한다.
-        this.accountStatus = accountStatus;
+        this.deleted = false;  // 생성 시 삭제 상태 아님
     }
 
     public void addMajor(Major major) {
@@ -88,6 +90,6 @@ public class Member extends BaseEntity {
     }
 
     public void deactivateAccount() {
-        this.accountStatus = AccountStatus.DEACTIVATED;
+        this.deleted = true;  // 계정을 비활성화 (Soft Delete 처리)
     }
 }
