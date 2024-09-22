@@ -6,6 +6,8 @@ import com.donga.damoa.domain.member.domain.MemberCreator;
 import com.donga.damoa.domain.member.dto.SignUpRequest;
 import com.donga.damoa.domain.member.error.MemberErrorCode;
 import com.donga.damoa.domain.member.error.exception.EmailDuplicateException;
+import com.donga.damoa.domain.myPage.dao.MyPageRepository;
+import com.donga.damoa.domain.myPage.domain.MyPage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberSignUpService {
 
     private final MemberRepository memberRepository;
+    private final MyPageRepository myPageRepository;
     private final MemberCreator memberCreator;
 
     @Transactional
@@ -27,6 +30,15 @@ public class MemberSignUpService {
 
         Member member = memberCreator.createMember(request);
         memberRepository.save(member);
+
+        createMyPageForMember(member);
+    }
+    private void createMyPageForMember(Member member) {
+        MyPage myPage = MyPage.builder()
+            .member(member)
+            .enrollmentStatus(member.getEnrollmentStatus()) // 회원의 재학 상태를 가져옴
+            .build();
+        myPageRepository.save(myPage);
     }
 
 }

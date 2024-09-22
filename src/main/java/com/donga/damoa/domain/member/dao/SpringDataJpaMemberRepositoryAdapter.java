@@ -21,6 +21,10 @@ public class SpringDataJpaMemberRepositoryAdapter implements MemberRepository {
         return repository.existsByEmail(email);
     }
 
+    public boolean existsById(Long memberId) {
+        return !repository.existsById(memberId);
+    }
+
     @Override
     public Optional<Member> findMemberByEmail(String email) {
         return repository.findMemberByEmail(email);
