@@ -31,7 +31,9 @@ public class MemberSignUpService {
         Member member = memberCreator.createMember(request);
         memberRepository.save(member);
 
-        // MyPage 생성 후 저장
+        createMyPageForMember(member);
+    }
+    private void createMyPageForMember(Member member) {
         MyPage myPage = MyPage.builder()
             .member(member)
             .enrollmentStatus(member.getEnrollmentStatus()) // 회원의 재학 상태를 가져옴
